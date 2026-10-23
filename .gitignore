@@ -13,3 +13,11 @@ data/
 outputs/
 private/
 *.tmp
+
+# Local secrets, caches and private runtime files
+.ruff_cache/
+.cache/
+*.db
+*.db-*
+*.pem
+*.key

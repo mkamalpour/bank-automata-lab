@@ -6,10 +6,11 @@ No real banking operations are performed. The included demo is generated synthet
 
 ## Run
 
-Tested on Windows with Python **3.13.5**. From this directory:
+Tested on Windows with Python **3.13.5**. From the repository root:
 
 ```powershell
 conda activate base
+# Optional, only if dependencies are missing and installation is authorized:
 python -m pip install -r requirements.txt
 python -m streamlit run app.py --server.address 127.0.0.1
 ```
