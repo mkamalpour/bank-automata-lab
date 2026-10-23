@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from automata import balance_tm, credit_nfa, normalize, risk_nfa, suffix_dfa, vowel_dfa
+from bank_workbench.automata import balance_tm, credit_nfa, normalize, risk_nfa, suffix_dfa, vowel_dfa
 
 COLUMNS = "national_id first_name last_name father_name birth_date birth_city birth_province residence_city residence_province".split()
 CAPITALS = dict(

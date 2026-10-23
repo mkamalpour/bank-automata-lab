@@ -3,7 +3,7 @@
 import itertools
 import unittest
 
-from automata import balance_tm, credit_nfa, normalize, risk_nfa, suffix_dfa, vowel_dfa
+from bank_workbench.automata import balance_tm, credit_nfa, normalize, risk_nfa, suffix_dfa, vowel_dfa
 
 
 class MachineTests(unittest.TestCase):

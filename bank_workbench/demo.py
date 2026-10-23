@@ -5,7 +5,7 @@ import io
 
 
 def demo_csv():
-    from bank_core import COLUMNS
+    from bank_workbench.bank_core import COLUMNS
 
     stream = io.StringIO(newline="")
     writer = csv.writer(stream)

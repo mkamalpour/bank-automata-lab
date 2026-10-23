@@ -53,7 +53,7 @@ def build_notebook(report, source_label="synthetic demo"):
             code = (
                 "# Configure the source, then execute the bounded pipeline.\n"
                 "import json\nfrom pathlib import Path\n"
-                "from bank_core import Config, execute_pipeline\nfrom demo import demo_csv\n"
+                "from bank_workbench.bank_core import Config, execute_pipeline\nfrom bank_workbench.demo import demo_csv\n"
                 "SOURCE_PATH = ''  # Empty uses the fictional demo; set a local CSV path here.\n"
                 f"config = Config(**{config!r})\n"
                 "# During export, the completed report is injected; a normal rerun reads the source.\n"
@@ -61,6 +61,8 @@ def build_notebook(report, source_label="synthetic demo"):
                 "if report is None:\n"
                 "    report = execute_pipeline(Path(SOURCE_PATH) if SOURCE_PATH else demo_csv(), config=config)\n"
             )
+        if number == 1:
+            code = "from pathlib import Path\nimport sys\nproject = Path.cwd() if (Path.cwd() / 'bank_workbench').is_dir() else Path.cwd().parent\nsys.path.insert(0, str(project))\n" + code
         if number == 20:
             code += (
                 "# Set relative_last_name and (without a suffix) relative_city in Config above.\n"

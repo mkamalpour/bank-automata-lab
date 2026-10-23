@@ -5,9 +5,9 @@ import io
 import json
 import unittest
 
-from bank_core import Config, execute_pipeline
-from demo import demo_csv
-from notebook_builder import build_notebook
+from bank_workbench.bank_core import Config, execute_pipeline
+from bank_workbench.demo import demo_csv
+from bank_workbench.notebook_builder import build_notebook
 
 
 class NotebookTests(unittest.TestCase):

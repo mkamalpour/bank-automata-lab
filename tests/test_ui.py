@@ -9,7 +9,7 @@ from streamlit.testing.v1 import AppTest
 class InterfaceTests(unittest.TestCase):
     def app(self):
         return AppTest.from_file(
-            str(Path(__file__).with_name("app.py")), default_timeout=60
+            str(Path(__file__).resolve().parents[1] / "app.py"), default_timeout=60
         ).run()
 
     def test_demo_questions_and_stale_results(self):
@@ -34,6 +34,19 @@ class InterfaceTests(unittest.TestCase):
         ).set_value("changed").run()
         self.assertTrue(any("Inputs changed" in w.value for w in app.warning))
         self.assertEqual(app.session_state["report"].stats, original.stats)
+
+    def test_private_export_refuses_repository_destination(self):
+        import tempfile
+        app = self.app()
+        next(b for b in app.button if b.label == "Run all 20 questions").click().run()
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory(dir=root) as folder:
+            destination = Path(folder) / "private.csv"
+            next(t for t in app.text_input if t.label == "Private destination CSV path").set_value(str(destination)).run()
+            next(b for b in app.button if b.label == "Export private Q20 CSV").click().run()
+            self.assertFalse(app.exception)
+            self.assertTrue(any("outside this repository" in error.value for error in app.error))
+            self.assertFalse(destination.exists())
 
     def test_every_machine_traces(self):
         app = self.app()

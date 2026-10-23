@@ -8,8 +8,8 @@ import tempfile
 import time
 from pathlib import Path
 
-from bank_core import execute_pipeline
-from demo import demo_csv
+from bank_workbench.bank_core import execute_pipeline
+from bank_workbench.demo import demo_csv
 
 
 def peak_process_mib():

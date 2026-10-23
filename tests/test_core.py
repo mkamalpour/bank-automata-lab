@@ -6,8 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from bank_core import COLUMNS, Config, execute_pipeline
-from demo import demo_csv
+from bank_workbench.bank_core import COLUMNS, Config, execute_pipeline
+from bank_workbench.demo import demo_csv
 
 
 class PipelineTests(unittest.TestCase):
