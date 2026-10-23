@@ -27,6 +27,6 @@ Dependencies are recorded in `requirements.txt`; review them before any optional
 python -m unittest discover -s tests -v
 ```
 
-See [method and usage](docs/METHOD.md) for capabilities, original comparisons, privacy rules and material limitations. Tests use synthetic data; native MATLAB, full-size datasets and optional external models are not implied to be verified. No license has been selected.
+See [method and usage](docs/METHOD.md) for capabilities, original comparisons, privacy rules and material limitations. Tests use synthetic data; full-size private bank datasets are not implied to be verified. No license has been selected.
 
 Current lightweight check (Windows, existing Conda base / Python 3.13.5): **17 passed**. No dependency installs, model downloads, live publishing, or heavy datasets were used. Full 32-million-row execution remains unverified.
