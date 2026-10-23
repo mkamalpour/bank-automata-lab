@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.env
+.env.*
+.streamlit/secrets.toml
+*.csv
+*.log
+*.sqlite*
+data/
+outputs/
+private/
+*.tmp
