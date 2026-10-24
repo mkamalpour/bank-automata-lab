@@ -14,7 +14,7 @@ from bank_workbench.demo import demo_csv
 from bank_workbench.notebook_builder import build_notebook
 
 def main():
-    st.set_page_config(page_title="Bank · Automata Workbench", page_icon="◈", layout="wide")
+    st.set_page_config(page_title="Bank Automata Lab", page_icon="◈", layout="wide")
     st.markdown(
         """<style>.stApp{background:#f7f5ef;color:#162b3b}h1,h2,h3{color:#132e41}.block-container{padding-top:3rem;max-width:1400px}[data-testid="stMetric"]{border-top:3px solid #26806b;padding:14px;background:white}.stTabs [data-baseweb="tab-list"]{gap:20px;border-bottom:1px solid #ccd5ce}.stTabs [data-baseweb="tab"]{font-weight:600}.lab-label{font-size:.8rem;letter-spacing:.16em;color:#92602f}@media(max-width:640px){.block-container{padding-top:4.5rem}.stTabs [data-baseweb="tab-list"]{gap:8px}}</style>""",
         unsafe_allow_html=True,
@@ -23,7 +23,7 @@ def main():
         '<div class="lab-label">THEORY OF LANGUAGES & MACHINES / COURSEWORK LAB</div>',
         unsafe_allow_html=True,
     )
-    st.title("Bank · Automata Workbench")
+    st.title("Bank Automata Lab")
     st.caption(
         "Twenty questions. One traceable pipeline. Fictional banking data, processed locally."
     )

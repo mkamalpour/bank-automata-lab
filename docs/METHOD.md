@@ -1,4 +1,4 @@
-# Bank Automata Workbench
+# Bank Automata Lab
 
 A local, educational Python application for the twenty-question **Theory of Languages and Machines** fictional bank project. It combines a five-tab interface, bounded CSV processing, inspectable DFA/NFA/tape-machine simulations, and a runnable Jupyter submission notebook.
 

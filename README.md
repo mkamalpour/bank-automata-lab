@@ -1,6 +1,10 @@
-# Bank Automata Workbench
+# Bank Automata Lab
 
-Twenty bank-coursework questions, inspectable automata, streaming CSV processing, and a private-output-aware notebook. Educational software; see the verification limits below.
+A small lab for following finite-state machines and answering 20 questions about bank records. Start with the built-in data, trace each decision, then try a CSV of your own. This is university coursework, not banking software.
+
+## Try it first
+
+Open **Dataset & pipeline**, select **Synthetic demo**, and click **Run all 20 questions**. Review individual answers in **Questions 1–20**; use **Automata lab** to trace a machine. Real bank data is not needed.
 
 ## Run
 
@@ -12,6 +16,8 @@ python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
 Dependencies are recorded in `requirements.txt`; review them before any optional installation. Heavy workloads and private datasets are not needed to explore the demos. `run.bat` uses the active environment.
+
+On Windows, `run.bat --check` checks the active environment without opening the app. Run `run.bat` to start, or `run.bat --server.port 8502` if another app is using the default port. The launcher works from any working directory and installs nothing.
 
 ## Layout
 
@@ -27,6 +33,6 @@ Dependencies are recorded in `requirements.txt`; review them before any optional
 python -m unittest discover -s tests -v
 ```
 
-See [method and usage](docs/METHOD.md) for capabilities, original comparisons, privacy rules and material limitations. Tests use synthetic data; full-size private bank datasets are not implied to be verified. No license has been selected.
+See [method and usage](docs/METHOD.md) for capabilities, original comparisons, privacy rules and material limitations. Tests use synthetic data; full-size private bank datasets are not implied to be verified.
 
-Current lightweight check (Windows, existing Conda base / Python 3.13.5): **17 passed**. No dependency installs, model downloads, live publishing, or heavy datasets were used. Full 32-million-row execution remains unverified.
+Checked on Windows with Python 3.13.5 (Conda base): **17 tests passed**. Full 32-million-row execution remains unverified.

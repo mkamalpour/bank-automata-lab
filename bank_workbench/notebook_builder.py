@@ -17,7 +17,7 @@ def build_notebook(report, source_label="synthetic demo"):
     config.update(relative_last_name="", relative_city="")
     synthetic = source_label.lower() == "synthetic demo"
     introduction = (
-        "# Bank Automata Workbench\n\n"
+        "# Bank Automata Lab\n\n"
         "Theory of Languages and Machines · fictional bank coursework.\n\n"
         f"Saved output source: **{source_label}**. "
         "Run this notebook from the repository directory with its Python environment. "
