@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from bank_workbench.automata import balance_tm, credit_nfa, normalize, risk_nfa, suffix_dfa, vowel_dfa
+from bank_workbench.automata import balance_tm, credit_decision, normalize, risk_nfa, suffix_dfa, vowel_dfa
 
 COLUMNS = "national_id first_name last_name father_name birth_date birth_city birth_province residence_city residence_province".split()
 CAPITALS = dict(
@@ -87,9 +87,23 @@ class Config:
     preview_limit: int = 20
 
 
+def _csv_header(source):
+    """Validate actual CSV names before pandas can silently mangle duplicates."""
+    handle = io.StringIO(source.decode('utf-8-sig'), newline='') if isinstance(source, bytes) else Path(source).open(encoding='utf-8-sig', newline='')
+    with handle:
+        header = next(csv.reader(handle), None)
+    if not header:
+        raise ValueError('CSV is empty or has no header')
+    names = [name.strip() for name in header]
+    if len(set(names)) != len(names):
+        raise ValueError('Duplicate CSV columns after trimming whitespace; give every column a unique name')
+    return header
+
+
 def _chunks(source, size):
     """Read strings without losing leading zeros or treating names as NA."""
     stream = io.BytesIO(source) if isinstance(source, bytes) else Path(source)
+    _csv_header(source)
     accepted = set(COLUMNS) | set(ALIASES) | {"FULL_NAME"}
     with pd.read_csv(
         stream,
@@ -247,8 +261,14 @@ class Report:
 
 def execute_pipeline(source, chunksize=100_000, config=Config(), progress=None):
     """Two streaming passes find global donor then apply exact redistribution."""
-    if not isinstance(chunksize, int) or chunksize < 1:
+    if isinstance(chunksize, bool) or not isinstance(chunksize, int) or chunksize < 1:
         raise ValueError("Chunk size must be a positive integer")
+    for name in ('seed', 'reference_year', 'balance_max', 'preview_limit'):
+        value = getattr(config, name)
+        if isinstance(value, bool) or not isinstance(value, int):
+            raise ValueError(f'{name} must be a whole integer, not a boolean or fraction')
+    if not 1 <= config.reference_year <= 9999:
+        raise ValueError('Reference year must be between 1 and 9999')
     if config.balance_max <= 100_000 or not 0 <= config.preview_limit <= 100:
         raise ValueError("Invalid balance maximum or preview limit (0–100)")
     if not re.fullmatch(
@@ -267,10 +287,7 @@ def execute_pipeline(source, chunksize=100_000, config=Config(), progress=None):
     ):
         raise ValueError("Relative city is required for a surname without a suffix")
     fingerprint = _fingerprint(source)
-    header_source = io.BytesIO(source) if isinstance(source, bytes) else Path(source)
-    original_columns = list(
-        pd.read_csv(header_source, nrows=0, encoding="utf-8-sig").columns
-    )
+    original_columns = _csv_header(source)
     questions = {
         i: dict(title=TITLES[i - 1], count=0, summary={}, preview=[])
         for i in range(1, 21)
@@ -326,11 +343,7 @@ def execute_pipeline(source, chunksize=100_000, config=Config(), progress=None):
             if start <= year <= start + 9:
                 cohorts[start][0] += 1
                 cohorts[start][1] += config.reference_year - year
-        verdict = credit_nfa(row["last_name"], year, trace=True)
-        label = {"accept": "accepted", "reject": "rejected", "review": "undecided"}.get(
-            verdict.get("decision"),
-            "accepted" if verdict.get("accepted") else "undecided",
-        )
+        label = {'accept': 'accepted', 'reject': 'rejected', 'review': 'undecided'}[credit_decision(row['last_name'], year)]
         credit[label] = credit.get(label, 0) + 1
         masks = {
             2: row["_filled"],

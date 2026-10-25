@@ -70,7 +70,7 @@ def main():
         def fingerprint():
             if isinstance(source, Path):
                 stat = source.stat()
-                identity = f"{source.resolve()}:{stat.st_size}:{stat.st_mtime_ns}"
+                identity = f"{source.resolve()}:{stat.st_size}:{stat.st_mtime_ns}:{stat.st_ctime_ns}"
             else:
                 identity = hashlib.sha256(source or b"").hexdigest()
             return hashlib.sha256((identity + repr(asdict(config))).encode()).hexdigest()

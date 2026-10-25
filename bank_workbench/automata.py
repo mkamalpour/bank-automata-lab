@@ -56,19 +56,33 @@ def vowel_dfa(text, trace=False):
     return {"accepted": accepted, "steps": steps, "state": state} if trace else accepted
 
 
+def _whole_year(value):
+    """Invalid/fractional years are unknown rather than silently truncated."""
+    text = normalize(value)
+    return int(text) if not isinstance(value, bool) and re.fullmatch(r"[+-]?[0-9]{1,4}", text) else -1
+
+
+def _credit_evidence(last_name, birth_year):
+    name = normalize(last_name).replace(" ", "")
+    year = _whole_year(birth_year)
+    a = name in {"رضایی‌نژاد".replace("\u200c", ""), "محمدیپور"}
+    b = name == "احمدی" and 1370 <= year <= 1404
+    return a, b
+
+
+def credit_decision(last_name, birth_year):
+    """Return the same NFA verdict without allocating a teaching trace per row."""
+    a, b = _credit_evidence(last_name, birth_year)
+    return "accept" if a else "reject" if b else "review"
+
+
 def credit_nfa(last_name, birth_year, trace=False):
     """Parallel evidence paths; acceptance takes priority over rejection.
 
     Separators are ignored for the two specified compound surnames so that Persian
     half-spaces and ordinary spaces have the same spelling semantics.
     """
-    name = normalize(last_name).replace(" ", "")
-    try:
-        year = int(birth_year)
-    except (ValueError, TypeError):
-        year = -1
-    a = name in {"رضایی‌نژاد".replace("\u200c", ""), "محمدیپور"}
-    b = name == "احمدی" and 1370 <= year <= 1404
+    a, b = _credit_evidence(last_name, birth_year)
     states = {"q_start", "q_a", "q_b"}  # epsilon closure of the start state
     steps = [{"index": 0, "symbol": "ε", "states": sorted(states)}] if trace else []
     # The record symbol carries the two independently evaluated predicates.
@@ -95,10 +109,7 @@ def credit_nfa(last_name, birth_year, trace=False):
 def risk_nfa(first, last, year, province, trace=False):
     """Nondeterministically choose two satisfied predicates among three."""
     first, last, province = map(normalize, (first, last, province))
-    try:
-        year = int(year)
-    except (ValueError, TypeError):
-        year = -1
+    year = _whole_year(year)
     evidence = [
         any(s in last for s in ("اصغری", "جعفری")) and 1360 <= year <= 1380,
         province in {"سیستان و بلوچستان", "هرمزگان", "خوزستان"},
