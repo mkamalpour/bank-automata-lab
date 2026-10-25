@@ -1,5 +1,7 @@
 # Bank Automata Lab
 
+**[Explore the interactive project presentation](docs/overview.html)** — open locally in your browser; works offline.
+
 A small lab for following finite-state machines and answering 20 questions about bank records. Start with the built-in data, trace each decision, then try a CSV of your own. This is university coursework, not banking software.
 
 ## Try it first
