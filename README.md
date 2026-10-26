@@ -8,6 +8,22 @@ A small lab for following finite-state machines and answering 20 questions about
 
 Open **Dataset & pipeline**, select **Synthetic demo**, and click **Run all 20 questions**. Review individual answers in **Questions 1–20**; use **Automata lab** to trace a machine. Real bank data is not needed.
 
+<details>
+<summary>Using the existing managed Windows workspace</summary>
+
+Assigned environment: **base** — Python **3.13.5**, using the existing Conda environment `base`. Open `Workspaces/bank-automata-lab.code-workspace` from the workspace folder to select its interpreter.
+
+From this repository folder in PowerShell:
+
+```powershell
+& '..\Launchers\bank-automata-lab.cmd' --check --deep
+& '..\Launchers\bank-automata-lab.cmd'
+```
+
+The launcher activates the assigned environment and checks dependencies. It does not install packages or download models. These launchers belong to the managed parent workspace; for a standalone clone, follow the setup instructions below in your own compatible environment. Keep optional model/provider prerequisites separate from the offline examples.
+
+</details>
+
 ## Run
 
 Activate an existing Python/Conda environment with the requirements already available. Nothing is installed automatically.
