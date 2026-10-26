@@ -61,3 +61,9 @@ Input checks now reject duplicate CSV headers (including whitespace collisions) 
 
 See the [engineering audit](docs/ENGINEERING_AUDIT.md) for the dated test baseline,
 project assessment, environment assignment and remaining work.
+
+## Additional workflow improvements
+
+Downloadable machine traces include entered parameters, specification, decision and every recorded transition, with an explicit privacy reminder.
+
+Automata lab → Trace machine → Download machine trace JSON. Keep traces based on personal records private.

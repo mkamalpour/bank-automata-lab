@@ -260,6 +260,13 @@ def main():
                 st.dataframe(steps, use_container_width=True, hide_index=True)
             with st.expander("Raw machine trace"):
                 st.json(trace)
+            st.caption('The downloaded trace contains the entered values. Keep traces from personal records private.')
+            st.download_button('Download machine trace JSON',
+                json.dumps(dict(format_version=1, machine=kind,
+                    inputs=dict(name=name, first_name=first, birth_year=int(machine_year),
+                                province=province, balance=int(balance)),
+                    specification=spec, trace=trace), ensure_ascii=False, indent=2),
+                'automaton-trace.json', 'application/json')
     with exports:
         st.header("Keep the work reproducible")
         st.write(

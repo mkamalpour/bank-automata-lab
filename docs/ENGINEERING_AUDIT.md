@@ -26,7 +26,7 @@ VS Code's local interpreter settings were aligned with the same assignment.
 
 ## Verification
 
-- **Automated tests:** 23 passed.
+- **Automated tests:** 23 passed; 0 reported skips; 0 private-report cases deselected.
 - **Startup check:** `run.cmd --check` passed from outside the repository;
   required startup modules were imported in the assigned environment.
 - **Tested runtime:** Windows; Conda base; Python 3.13.5.
@@ -48,7 +48,7 @@ python -m pytest tests -q -p no:cacheprovider
 
 ## Next three upgrades
 
-1. Replayable automata trace examples.
+1. Curated trace exercises with expected transition sequences.
 2. Exported question explanations.
 3. Additional malformed-CSV fixtures.
 
@@ -58,3 +58,17 @@ for quality. These are proposed upgrades, not implemented features or measured s
 External assets: Synthetic bank records suffice; private banking data is unnecessary.
 
 No root license file is set. No license was selected or changed.
+
+## Additional implementation pass
+
+Downloadable machine traces include entered parameters, specification, decision and every recorded transition, with an explicit privacy reminder.
+
+Use: Automata lab → Trace machine → Download machine trace JSON. Keep traces based on personal records private.
+
+Verification: the complete offline suite passed in the assigned **base**
+environment after this change (23 tests). Regression fixtures remain
+temporary/synthetic. Optional real-model/data quality and external integrations
+remain unverified. No packages, models or additional environments were installed.
+
+The earlier numeric scores are subjective historical assessments; new features do
+not automatically establish a higher score or production readiness.
