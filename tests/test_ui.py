@@ -63,5 +63,16 @@ class InterfaceTests(unittest.TestCase):
                 )
 
 
+    def test_empty_word_machine_traces_show_verdict_without_index_error(self):
+        app = self.app()
+        for kind in ['suffix', 'vowel']:
+            next(s for s in app.selectbox if s.label == 'Machine').select(kind).run()
+            next(t for t in app.text_input if t.label == 'Name / last name').set_value('').run()
+            next(b for b in app.button if b.label == 'Trace machine').click().run()
+            self.assertFalse(app.exception, kind)
+            self.assertTrue(any('Result: Rejected' in h.value for h in app.subheader))
+            self.assertTrue(any('Empty input' in info.value for info in app.info))
+
+
 if __name__ == "__main__":
     unittest.main()

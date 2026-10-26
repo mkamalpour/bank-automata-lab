@@ -53,6 +53,6 @@ python -m unittest discover -s tests -v
 
 See [method and usage](docs/METHOD.md) for capabilities, original comparisons, privacy rules and material limitations. Tests use synthetic data; full-size private bank datasets are not implied to be verified.
 
-Checked on Windows with Python 3.13.5 (Conda base): **22 tests passed**. Full 32-million-row execution remains unverified.
+Checked on Windows with Python 3.13.5 (Conda base): **23 tests passed**. Full 32-million-row execution remains unverified.
 
 Input checks now reject duplicate CSV headers (including whitespace collisions) and invalid fractional/non-finite processing settings before producing partial answers. Batch credit decisions use the same evidence as the inspectable NFA without building a teaching trace for every row. Fractional birth years are treated as unknown rather than truncated. The interface retains its current tabs and styling; changed source-file metadata invalidates stale results.

@@ -239,20 +239,23 @@ def main():
             if "value" in trace:
                 st.write(f"Output: {trace['value']}")
             steps = trace["steps"]
-            selected = (
-                st.slider("Trace step", 0, len(steps) - 1, 0, key="trace_step")
-                if len(steps) > 1
-                else 0
-            )
-            step = steps[selected]
-            current_state = step.get("state", ", ".join(step.get("states", [])))
-            a, b, c = st.columns(3)
-            a.metric("Current state(s)", current_state)
-            b.metric("Read symbol", str(step.get("symbol", "")))
-            c.metric("Tape head / step", str(step.get("head", selected)))
-            st.caption(
-                f"Step {selected + 1} of {len(steps)}. Move the slider to follow the computation."
-            )
+            if not steps:
+                st.info("Empty input: the machine remains in its initial state; no symbols were consumed.")
+            else:
+                selected = (
+                    st.slider("Trace step", 0, len(steps) - 1, 0, key="trace_step")
+                    if len(steps) > 1
+                    else 0
+                )
+                step = steps[selected]
+                current_state = step.get("state", ", ".join(step.get("states", [])))
+                a, b, c = st.columns(3)
+                a.metric("Current state(s)", current_state)
+                b.metric("Read symbol", str(step.get("symbol", "")))
+                c.metric("Tape head / step", str(step.get("head", selected)))
+                st.caption(
+                    f"Step {selected + 1} of {len(steps)}. Move the slider to follow the computation."
+                )
             with st.expander("All transition steps"):
                 st.dataframe(steps, use_container_width=True, hide_index=True)
             with st.expander("Raw machine trace"):
